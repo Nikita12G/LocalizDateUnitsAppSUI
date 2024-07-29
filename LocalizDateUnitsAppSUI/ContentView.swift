@@ -49,9 +49,9 @@ struct ContentView: View {
             Text(formattedDate(style: .medium))
             Text(formattedDate(style: .short))
                 .padding(.bottom)
-            Text("\(NSLocalizedString("Distance in meters", comment: "")) \(formattedDistance(100, unit: "meters"))")
-            Text("\(NSLocalizedString("Distance in kilometers", comment: "")) \(formattedDistance(metersToKilometers(100), unit: "kilometers"))")
-            Text("\(NSLocalizedString("Distance in miles", comment: "")) \(formattedDistance(metersToMiles(100), unit: "miles"))")
+            Text(NSLocalizedString("100 meters in", comment: ""))
+            Text("\(NSLocalizedString("kilometers", comment: "")) \(formattedDistance(metersToKilometers(100), unit: UnitLength.kilometers))")
+            Text("\(NSLocalizedString("miles", comment: "")) \(formattedDistance(metersToMiles(100), unit: UnitLength.miles))")
         }
     }
     
@@ -64,19 +64,24 @@ struct ContentView: View {
     }
     
     private func metersToKilometers(_ meters: Double) -> Double {
-        return meters / 1000
+        let measurement = Measurement(value: meters, unit: UnitLength.meters)
+        return measurement.converted(to: .kilometers).value
     }
-    
+
     private func metersToMiles(_ meters: Double) -> Double {
-        return meters * 0.000621371
+        let measurement = Measurement(value: meters, unit: UnitLength.meters)
+        return measurement.converted(to: .miles).value
     }
-    
-    private func formattedDistance(_ distance: Double, unit: String) -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
+
+    private func formattedDistance(_ distance: Double, unit: UnitLength) -> String {
+        let measurement = Measurement(value: distance, unit: unit)
+        
+        let formatter = MeasurementFormatter()
         formatter.locale = Locale(identifier: currentSysLanguage)
-        formatter.maximumFractionDigits = 2
-        return "\(formatter.string(from: NSNumber(value: distance)) ?? "0") \(NSLocalizedString(unit, comment: "distance unit"))"
+        formatter.unitOptions = .providedUnit
+        formatter.numberFormatter.maximumFractionDigits = 2
+        
+        return formatter.string(from: measurement)
     }
 }
 
