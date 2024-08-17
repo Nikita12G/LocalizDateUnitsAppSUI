@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  LocalizDateUnitsAppSUI
+
+  Created by Никита Гуляев on 25.07.2024.
+  
+*/
+"zero" = "zero";
+"one" = "one";
+"two" = "two";
+"three" = "there";
+"four" = "four";
+"five" = "five";
+"six" = "six";
+"seven" = "seven";
+"eight" = "eight";
+"nine" = "nine";
+"Switch language in settings" = "Switch language in settings";
+"Russian language" = "Russian language";
+"Distance in meters" = "Distance in meters";
+"Distance in kilometers" = "Distance in kilometers";
+"Distance in miles" = "Distance in miles";
